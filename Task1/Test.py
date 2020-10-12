@@ -30,18 +30,22 @@ classes=list(train_generator.class_indices.keys())
 test_images = os.listdir(f'../input/test-images/Test_images')
 for i in range(len(test_images)):
     print(test_images[i])
-    test_image = image.load_img(f'../input/test-images/Test_images/{test_images[i]}', target_size = (200, 200))
-    test_image = image.img_to_array(test_image)
-    test_image = np.expand_dims(test_image1, axis = 0)
-    result1 = model1.predict(test_image)
+    test_image1 = image.load_img(f'../input/test-images/Test_images/{test_images[i]}', target_size = (200, 200))
+    test_image1 = image.img_to_array(test_image1)/255
+    test_image1 = np.expand_dims(test_image1, axis = 0)
+    result1 = model1.predict(test_image1)
     
-    test_image = image.load_img(f'../input/test-images/Test_images/{test_images[i]}', target_size = (224, 224))
-    test_image = image.img_to_array(test_image)
-    test_image = np.expand_dims(test_image, axis = 0)
-    result2 = model2.predict(test_image)
+    test_image2 = image.load_img(f'../input/test-images/Test_images/{test_images[i]}', target_size = (224, 224))
+    test_image2 = image.img_to_array(test_image2)/255
+    test_image2 = np.expand_dims(test_image2, axis = 0)
+    result2 = model2.predict(test_image2)
     
     for i in range (0,len(classes)):
+        
         if result1[0][i]>0.5:
-            print('Model 1 Prediction is',classes[i])
-#         if result2[0][i]>0.5:
-#             print('Model 2 Prediction is',classes[i])
+            class1=classes[i]
+        if result2[0][i]>0.5:
+            class2=classes[i]
+            
+    print('Model 1 Prediction is',class1)
+    print('Model 2 Prediction is',class2)
